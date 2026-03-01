@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="app">
-      <UserView />
+      <UserView user={user} />
     </div>
   );
 }

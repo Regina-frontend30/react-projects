@@ -13,16 +13,16 @@ export const Button: FC<IButtonProps> = ({
   isLoading,
   isDisabled = isLoading,
   children,
-  className,
+  className = "",
   kind = "primary",
-  type,
+  type = "button",
   ...props
 }) => {
   return (
     <button
       disabled={isDisabled}
       type={type}
-      className="button"
+      className={`button ${className}`}
       data-kind={kind}
       {...props}
     >

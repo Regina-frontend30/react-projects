@@ -1,27 +1,21 @@
-import "./NotesListView.css";
-import { NoteView } from "../NoteView";
+import { useNotes } from "../../hooks/useNotes";
+import { Loader } from "../Loader";
+import { NoteView } from "../NoteView/NoteView";
 
 export const NotesListView = () => {
+  const { data, isLoading, error } = useNotes();
+
+  if (isLoading) return <Loader />;
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-    <ul className="note-list-view">
-      <li>
-        <NoteView />
-      </li>
-      <li>
-        <NoteView />
-      </li>
-      <li>
-        <NoteView />
-      </li>
-      <li>
-        <NoteView />
-      </li>
-      <li>
-        <NoteView />
-      </li>
-      <li>
-        <NoteView />
-      </li>
-    </ul>
+    <div>
+      {data?.map((note) => (
+        <NoteView key={note.id} note={note} />
+      ))}
+    </div>
   );
 };
