@@ -1,1 +1,1 @@
-export * from "./NoteView.tsx";
+export { NoteView } from "./NoteView";

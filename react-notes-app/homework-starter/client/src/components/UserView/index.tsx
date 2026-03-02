@@ -1,1 +1,1 @@
-export * from "./UserView.tsx";
+export { UserView } from "./UserView";

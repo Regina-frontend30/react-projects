@@ -24,3 +24,8 @@ p {
   height: 100vh;
   color: var(--text-primary);
 }
+
+.error {
+  color: var(--error);
+  font-size: 12px;
+}

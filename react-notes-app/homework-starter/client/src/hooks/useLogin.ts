@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { register, RegisterRequest } from "../api/auth";
+import { login, LoginRequest } from "../api/auth";
 
-export function useRegister() {
+export function useLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const submit = async (data: RegisterRequest) => {
+  const submit = async (data: LoginRequest) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      await register(data);
+      await login(data);
       window.location.reload();
     } catch (e) {
       if (e instanceof Error) {

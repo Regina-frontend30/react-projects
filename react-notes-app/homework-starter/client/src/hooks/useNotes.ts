@@ -1,21 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { getNotes, Note } from "../api/notes";
 
-export interface UseNotesResult {
-  data: Note[] | undefined;
-  isLoading: boolean;
-  error: string | null;
-}
+export function useNotes() {
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-export function useNotes(): UseNotesResult {
-  const { data, isLoading, error } = useQuery<Note[]>({
-    queryKey: ["notes"],
-    queryFn: getNotes,
-  });
+  useEffect(() => {
+    setIsLoading(true);
+    setError(null);
 
-  return {
-    data,
-    isLoading,
-    error: error instanceof Error ? error.message : null,
-  };
+    getNotes()
+      .then((data) => {
+        setNotes(data.list);
+      })
+      .catch((e) => {
+        if (e instanceof Error) {
+          setError(e.message);
+        }
+      })
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  return { notes, isLoading, error };
 }

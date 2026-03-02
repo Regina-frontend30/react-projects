@@ -11,7 +11,9 @@
   background-color: var(--background);
 
   width: 560px;
+  max-width: calc(100vw - 32px);
   padding: 24px 16px;
+  box-sizing: border-box;
 
   position: fixed;
   top: 50%;

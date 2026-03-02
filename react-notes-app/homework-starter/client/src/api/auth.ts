@@ -1,11 +1,12 @@
+
 export interface LoginRequest {
   email: string;
   password: string;
 }
 
 export interface RegisterRequest {
-  username: string;
   email: string;
+  username: string;
   password: string;
 }
 
@@ -21,7 +22,6 @@ export async function login(data: LoginRequest): Promise<boolean> {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify(data),
   });
 
@@ -38,7 +38,6 @@ export async function register(data: RegisterRequest): Promise<User> {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify(data),
   });
 
@@ -50,9 +49,7 @@ export async function register(data: RegisterRequest): Promise<User> {
 }
 
 export async function getMe(): Promise<User> {
-  const response = await fetch("/api/users/me", {
-    credentials: "include",
-  });
+  const response = await fetch("/api/users/me");
 
   if (!response.ok) {
     throw new Error("Не авторизован");
@@ -64,6 +61,5 @@ export async function getMe(): Promise<User> {
 export async function logout(): Promise<void> {
   await fetch("/api/logout", {
     method: "POST",
-    credentials: "include",
   });
 }

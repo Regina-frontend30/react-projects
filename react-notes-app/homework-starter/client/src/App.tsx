@@ -1,29 +1,32 @@
+import React from "react";
 import "./App.css";
-import { AuthForm } from "./components/AuthForm";
-import { UserView } from "./components/UserView/UserView";
+
 import { useMe } from "./hooks/useMe";
-import { Loader } from "./components/Loader/Loader";
+import { AuthForm } from "./components/AuthForm";
+import { UserView } from "./components/UserView";
+import { Layout } from "./components/Layout";
+import { NoteForm } from "./components/NoteForm";
+import { NotesListView } from "./components/NotesListView";
 
 function App() {
   const { user, isLoading } = useMe();
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (!user) {
-    return (
-      <div className="app">
-        <AuthForm />
-      </div>
-    );
-  }
-
   return (
     <div className="app">
-      <UserView user={user} />
+      {isLoading && <div>Загрузка...</div>}
+
+      {!isLoading && !user && <AuthForm />}
+
+      {!isLoading && user && (
+        <React.Fragment>
+          <UserView user={user} />
+          <Layout>
+            <NoteForm />
+            <NotesListView />
+          </Layout>
+        </React.Fragment>
+      )}
     </div>
   );
 }
-
 export default App;

@@ -1,13 +1,18 @@
+import { Button } from "../Button";
 import { logout } from "../../api/auth";
-import { useQueryClient } from "@tanstack/react-query";
+import "./LogoutButton.css";
 
 export const LogoutButton = () => {
-  const queryClient = useQueryClient();
-
   const handleLogout = async () => {
     await logout();
-    queryClient.invalidateQueries({ queryKey: ["me"] });
+    window.location.reload();
   };
 
-  return <button onClick={handleLogout}>Выйти</button>;
+  return (
+    <div className="logout-button">
+      <Button kind="secondary" onClick={handleLogout}>
+        Выйти
+      </Button>
+    </div>
+  );
 };

@@ -5,6 +5,8 @@
   flex-direction: column;
   gap: 8px;
   height: 100%;
+  flex: 1;
+  min-width: 0;
 
   margin-inline: auto;
   overflow: auto;

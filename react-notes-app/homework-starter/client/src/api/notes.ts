@@ -1,19 +1,44 @@
 export interface Note {
   id: string;
   title: string;
-  content: string;
+  text: string;
+  userId: string;
+  createdAt: number;
 }
 
-export async function getNotes(): Promise<Note[]> {
+export interface NotesResponse {
+  list: Note[];
+  pageCount: number;
+}
+
+export async function getNotes(): Promise<NotesResponse> {
   const response = await fetch("/api/notes", {
-    credentials: "include",
   });
 
   if (!response.ok) {
-    throw new Error("Ошибка получения заметок");
+    throw new Error("Ошибка загрузки заметок");
   }
 
-  const data = await response.json();
+  return response.json();
+}
 
-  return data.list; 
+export interface CreateNoteRequest {
+  title: string;
+  text: string;
+}
+
+export async function createNote(
+  data: CreateNoteRequest
+): Promise<void> {
+  const response = await fetch("/api/notes", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Ошибка создания заметки");
+  }
+
 }

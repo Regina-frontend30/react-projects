@@ -1,15 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { getMe, User } from "../api/auth";
 
 export function useMe() {
-  const { data, isLoading, isFetching, error } = useQuery<User>({
-    queryKey: ["me"],
-    queryFn: getMe,
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  return {
-    user: data ?? null,
-    isLoading: isLoading || isFetching,
-    error: error instanceof Error ? error.message : null,
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    getMe()
+      .then(setUser)
+      .catch(() => setUser(null))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  return { user, isLoading };
 }
