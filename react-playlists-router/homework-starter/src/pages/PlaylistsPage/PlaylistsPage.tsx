@@ -8,8 +8,11 @@ export function PlaylistsPage() {
   const genre = searchParams.get("genre") ?? "";
   const name = searchParams.get("name") ?? "";
 
-  const filteredPlaylists = PLAYLISTS
-    .filter((playlist: TPlaylist) => playlist.genre !== "Non Music")
+  const playlistsWithoutNonMusic = PLAYLISTS.filter(
+    (playlist: TPlaylist) => playlist.genre !== "Non Music"
+  );
+
+  const filteredPlaylists = playlistsWithoutNonMusic
     .filter((playlist: TPlaylist) =>
       genre
         ? playlist.genre.toLowerCase().includes(genre.toLowerCase())
@@ -56,16 +59,29 @@ export function PlaylistsPage() {
       <div>
         <label>
           Жанр:
-          <input type="text" value={genre} onChange={handleGenreChange} />
+          <input
+            type="text"
+            value={genre}
+            onChange={handleGenreChange}
+          />
         </label>
       </div>
 
       <div>
         <label>
           Название:
-          <input type="text" value={name} onChange={handleNameChange} />
+          <input
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+          />
         </label>
       </div>
+
+      {genre && <p>Фильтр по жанру: {genre}</p>}
+      {name && <p>Фильтр по названию: {name}</p>}
+
+      <p>Найдено плейлистов: {filteredPlaylists.length}</p>
 
       <ul>
         {filteredPlaylists.map((playlist: TPlaylist) => (
