@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { PLAYLISTS } from "../../data/playlists";
 import { TPlaylist } from "../../data/interfaces";
 
@@ -17,7 +17,12 @@ export function PlaylistInfoPage() {
     <div>
       <h2>{playlist.name}</h2>
 
-      <p>Жанр: {playlist.genre}</p>
+      <p>
+        Жанр:{" "}
+        <Link to={`/playlists?genre=${playlist.genre}`}>
+          {playlist.genre}
+        </Link>
+      </p>
 
       <h3>Треки:</h3>
 
@@ -26,6 +31,8 @@ export function PlaylistInfoPage() {
           <li key={i}>{song}</li>
         ))}
       </ul>
+
+      <Link to="/playlists">← Назад к списку</Link>
     </div>
   );
 }
