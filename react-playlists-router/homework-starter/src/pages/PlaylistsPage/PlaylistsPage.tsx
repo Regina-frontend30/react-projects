@@ -24,33 +24,21 @@ export function PlaylistsPage() {
         : true
     );
 
-  const handleGenreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleChange =
+    (param: "genre" | "name") =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
 
-    const params = new URLSearchParams(searchParams);
+      const params = new URLSearchParams(searchParams);
 
-    if (value) {
-      params.set("genre", value);
-    } else {
-      params.delete("genre");
-    }
+      if (value) {
+        params.set(param, value);
+      } else {
+        params.delete(param);
+      }
 
-    setSearchParams(params);
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    const params = new URLSearchParams(searchParams);
-
-    if (value) {
-      params.set("name", value);
-    } else {
-      params.delete("name");
-    }
-
-    setSearchParams(params);
-  };
+      setSearchParams(params);
+    };
 
   return (
     <div>
@@ -62,7 +50,7 @@ export function PlaylistsPage() {
           <input
             type="text"
             value={genre}
-            onChange={handleGenreChange}
+            onChange={handleChange("genre")}
           />
         </label>
       </div>
@@ -73,7 +61,7 @@ export function PlaylistsPage() {
           <input
             type="text"
             value={name}
-            onChange={handleNameChange}
+            onChange={handleChange("name")}
           />
         </label>
       </div>
