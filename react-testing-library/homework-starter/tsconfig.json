@@ -1,6 +1,8 @@
 {
 	"compilerOptions": {
 		"strict": true,
+		"skipLibCheck": true,
+		"noEmit": true,
 		"target": "ES2017",
 		"lib": ["ESNext", "DOM"],
 		"module": "CommonJS",
