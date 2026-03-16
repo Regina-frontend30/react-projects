@@ -5,4 +5,7 @@ export default {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
   testMatch: ["**/*.test.(ts|tsx|js|jsx)"],
+  moduleNameMapper: {
+    "\\.(css|less|sass|scss)$": "<rootDir>/package.json",
+  },
 };
