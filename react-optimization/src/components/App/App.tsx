@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { fetchBestEmployeesData, fetchData, IData } from "../../api.ts";
 import { BestEmployees } from "../BestEmployees/BestEmployees.tsx";
 import { Team } from "../Team/Team.tsx";
@@ -15,21 +15,23 @@ function App() {
 
   const { profit = [], team = [] } = data || {};
 
-  // мемоизируем тяжёлое вычисление
   const profitSum = useMemo(() => {
     return month * profit.reduce((acc, i) => acc + i, 0);
   }, [month, profit]);
 
   const date = useMemo(() => `${month}/${year}`, [month, year]);
 
-  const getApi = () => fetchBestEmployeesData(year);
+  const getApi = useCallback(() => {
+    return fetchBestEmployeesData(year);
+  }, [year]);
 
-  /* Увеличивает месяц */
-  const onIncMonth = () => setMonth((count) => (count === 12 ? 1 : count + 1));
+  const onIncMonth = useCallback(() => {
+    setMonth((count) => (count === 12 ? 1 : count + 1));
+  }, []);
 
-  /* Уменьшает год до 2018го */
-  const onDecYear = () =>
+  const onDecYear = useCallback(() => {
     setYear((count) => (count === 2018 ? 2018 : count - 1));
+  }, []);
 
   return (
     <div>
