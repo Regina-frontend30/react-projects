@@ -15,9 +15,10 @@ function App() {
 
   const { profit = [], team = [] } = data || {};
 
-  /* Вычисляет доход на количество месяцев (примем, что список profit каждый месяц одинаков) */
-  const calculateProfitSum = (month: number) =>
-    month * profit.reduce((acc, i) => acc + i, 0);
+  // мемоизируем тяжёлое вычисление
+  const profitSum = useMemo(() => {
+    return month * profit.reduce((acc, i) => acc + i, 0);
+  }, [month, profit]);
 
   const date = useMemo(() => `${month}/${year}`, [month, year]);
 
@@ -33,14 +34,17 @@ function App() {
   return (
     <div>
       <h1>App</h1>
+
       <div className="buttons">
         <button onClick={onIncMonth}>month is {month}</button>
         <button onClick={onDecYear}>year is {year}</button>
       </div>
+
       <div className="block">
         <p>Date is: {date}</p>
-        <p>Profit sum is: {calculateProfitSum(month)} $</p>
+        <p>Profit sum is: {profitSum} $</p>
       </div>
+
       <BestEmployees getApi={getApi} />
       <Team team={team} />
     </div>
