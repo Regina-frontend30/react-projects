@@ -24,11 +24,11 @@ export const quotesApiSlice = createApi({
     // Supply generics for the return type (in this case `QuotesApiResponse`)
     // and the expected query argument. If there is no argument, use `void`
     // for the argument type instead.
-    getQuotes: build.query<QuotesApiResponse, number>({
-      query: (limit = 10) => `?limit=${limit.toString()}`,
+    getQuotes: build.query<QuotesApiResponse, number | undefined>({
+      query: limit => `?limit=${(limit ?? 10).toString()}`,
       // `providesTags` determines which 'tag' is attached to the
       // cached data returned by the query.
-      providesTags: (_result, _error, id) => [{ type: "Quotes", id }],
+      providesTags: () => [{ type: "Quotes" }],
     }),
   }),
 })

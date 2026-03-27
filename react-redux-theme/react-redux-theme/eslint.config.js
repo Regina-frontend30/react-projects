@@ -4,9 +4,9 @@ import prettierConfig from "eslint-config-prettier/flat"
 import reactPlugin from "eslint-plugin-react"
 import reactHooksPlugin from "eslint-plugin-react-hooks"
 import globals from "globals"
-import { config, configs } from "typescript-eslint"
+import tseslint from "typescript-eslint"
 
-const eslintConfig = config(
+const eslintConfig = [
   {
     name: "global-ignores",
     ignores: [
@@ -25,8 +25,8 @@ const eslintConfig = config(
     name: `${js.meta.name}/recommended`,
     ...js.configs.recommended,
   },
-  configs.strictTypeChecked,
-  configs.stylisticTypeChecked,
+  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
   vitestPlugin.configs.recommended,
   {
     name: "eslint-plugin-react/jsx-runtime",
@@ -79,6 +79,6 @@ const eslintConfig = config(
   },
 
   prettierConfig,
-)
+]
 
 export default eslintConfig
